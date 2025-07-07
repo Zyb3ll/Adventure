@@ -6,7 +6,6 @@
     <title>O Jardim Cintilante de Lumina</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos CSS embutidos */
         body {
             font-family: 'Lora', serif;
             background: linear-gradient(135deg, #f0e6fa, #e6f7ff);
@@ -39,6 +38,12 @@
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            background-color: #eee; /* Cor de fundo para placeholders */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: #999;
         }
 
         #game-image {
@@ -150,32 +155,39 @@
             <p id="current-text"></p>
         </div>
         <div id="choices-container">
-            </div>
+        </div>
     </div>
 
     <script>
-        // Código JavaScript embutido
+        // Imagens genéricas Base64 (1x1 pixel transparente ou preto)
+        // Você pode substituir essas strings pelas suas próprias imagens Base64 se quiser personalizar!
+        const TRANSPARENT_PIXEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+        const BLACK_SQUARE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="; // Usaremos um pixel preto para simular uma imagem
+
+        const IMAGES = {
+            // Placeholder images (can be replaced with actual Base64 image data)
+            // Example: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA..."
+            background_forest: BLACK_SQUARE,
+            diary_open: BLACK_SQUARE,
+            forest_stream: BLACK_SQUARE,
+            fairy_encounter: BLACK_SQUARE,
+            pearl_found: BLACK_SQUARE,
+            jardim_restaurado_parcial: BLACK_SQUARE,
+            garden_restored_full: BLACK_SQUARE,
+            crystal_cave_placeholder: BLACK_SQUARE,
+            misty_peaks_placeholder: BLACK_SQUARE,
+            dense_forest_placeholder: BLACK_SQUARE,
+            // Adicione mais placeholders se expandir a história com novas imagens
+        };
+
         const gameText = document.getElementById('current-text');
         const gameImage = document.getElementById('game-image');
         const choicesContainer = document.getElementById('choices-container');
 
-        // IMPORTANTE: Substitua 'data:image/png;base64,...' pelas suas próprias imagens Base64
-        // Use um conversor online de imagem para Base64 e cole o resultado aqui.
-        const IMAGES = {
-            background_forest: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", // Exemplo de imagem Base64 (substitua!)
-            diary_open: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", // Exemplo (substitua!)
-            forest_stream: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", // Exemplo (substitua!)
-            fairy_encounter: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", // Exemplo (substitua!)
-            pearl_found: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", // Exemplo (substitua!)
-            jardim_restaurado_parcial: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", // Exemplo (substitua!)
-            garden_restored_full: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  // Exemplo (substitua!)
-        };
-
-
         const scenes = {
             start: {
                 text: "Bem-vinda ao mundo de Lumina. Você é Elara, uma tecelã de sonhos, e o destino da magia está em suas mãos. O Jardim Cintilante, outrora vibrante, agora está desbotado. Um antigo diário revela a verdade: as Pérolas Etéreas, fragmentos de luz mágica, devem ser encontradas para restaurar o Jardim.",
-                image: "background_forest", // Referência à chave no objeto IMAGES
+                image: "background_forest",
                 choices: [
                     { text: "Abrir o diário e começar a busca.", nextScene: "readDiary" }
                 ]
@@ -206,4 +218,156 @@
                 ]
             },
             befriendFairy: {
-                text: "A criatura vo
+                text: "A criatura voa até sua mão, pousando suavemente. Ela irradia uma luz suave e te guia até um arbusto de amoras mágicas, onde a primeira Pérola Etérea repousa.",
+                image: "pearl_found",
+                choices: [
+                    { text: "Pegar a Pérola Etérea.", nextScene: "pearl1Collected" }
+                ]
+            },
+            pearl1Collected: {
+                text: "A primeira Pérola Etérea agora está em suas mãos. Uma parte do Jardim Cintilante parece ter se reerguido em seu coração. Você sente que o caminho para as outras pérolas se revelará em breve. Qual o próximo passo?",
+                image: "jardim_restaurado_parcial",
+                choices: [
+                    { text: "Explorar as Cavernas de Cristal.", nextScene: "crystalCaves" },
+                    { text: "Subir os Picos Nebulosos.", nextScene: "mistyPeaks" },
+                    { text: "Voltar para o início e repensar.", nextScene: "readDiary" }
+                ]
+            },
+            // Placeholder para as outras cenas. Você deve expandir a história aqui!
+            crystalCaves: {
+                text: "Você se aventura nas Cavernas de Cristal. As paredes brilham com cristais cintilantes. O que você faz?",
+                image: "crystal_cave_placeholder",
+                choices: [
+                    { text: "Explorar mais fundo.", nextScene: "exploreCaves" },
+                    { text: "Procurar uma saída.", nextScene: "readDiary" }
+                ]
+            },
+            exploreCaves: {
+                text: "Profundo nas cavernas, você encontra uma fonte de luz mística. Parece ser o lar de criaturas subterrâneas pacíficas.",
+                image: "crystal_cave_placeholder",
+                choices: [
+                    { text: "Interagir com as criaturas.", nextScene: "befriendGoblins" },
+                    { text: "Seguir em frente.", nextScene: "findCrystalPearl" }
+                ]
+            },
+            findCrystalPearl: {
+                text: "Seguindo seu instinto, você encontra um cristal gigante que pulsa com energia. Dentro dele, a segunda Pérola Etérea brilha.",
+                image: "pearl_found", // Reutilizando a imagem da pérola
+                choices: [
+                    { text: "Pegar a Pérola Etérea.", nextScene: "pearl2Collected" }
+                ]
+            },
+            pearl2Collected: {
+                text: "Duas Pérolas Etéreas em sua posse! O Jardim Cintilante ganha mais vida. A última pérola aguarda nos picos.",
+                image: "jardim_restaurado_parcial", // Reutilizando imagem
+                choices: [
+                    { text: "Subir os Picos Nebulosos.", nextScene: "mistyPeaks" },
+                    { text: "Voltar e revisar o diário.", nextScene: "readDiary" }
+                ]
+            },
+            mistyPeaks: {
+                text: "Os Picos Nebulosos estão envoltos em uma névoa densa. O ar é frio e ralo. Uma brisa gélida te envolve.",
+                image: "misty_peaks_placeholder",
+                choices: [
+                    { text: "Subir a trilha íngreme.", nextScene: "climbPeaks" },
+                    { text: "Procurar um abrigo.", nextScene: "readDiary" }
+                ]
+            },
+            climbPeaks: {
+                text: "A escalada é árdua, mas você persevera. No topo, uma plataforma antiga se revela, guardada por uma aura serena.",
+                image: "misty_peaks_placeholder",
+                choices: [
+                    { text: "Aproximar-se da aura.", nextScene: "findSkyPearl" }
+                ]
+            },
+            findSkyPearl: {
+                text: "A aura se dissipa, revelando um pedestal onde a terceira e última Pérola Etérea flutua, vibrando com a energia do céu.",
+                image: "pearl_found", // Reutilizando imagem
+                choices: [
+                    { text: "Pegar a Pérola Etérea.", nextScene: "pearl3Collected" }
+                ]
+            },
+            pearl3Collected: {
+                text: "Com todas as três Pérolas Etéreas em suas mãos, uma luz deslumbrante emana de você. O Jardim Cintilante está completo!",
+                image: "garden_restored_full",
+                choices: [
+                    { text: "Ver o final feliz!", nextScene: "endGame" }
+                ]
+            },
+            denseForest: {
+                text: "Você decide adentrar a densa floresta. O cheiro de terra e folhas é forte. A luz do sol mal penetra as copas das árvores.",
+                image: "dense_forest_placeholder",
+                choices: [
+                    { text: "Procurar por sinais de vida.", nextScene: "findCreature" },
+                    { text: "Tentar encontrar o riacho novamente.", nextScene: "forestPath" }
+                ]
+            },
+            findCreature: {
+                text: "Entre as árvores, você avista um pequeno cervo com chifres que brilham suavemente. Ele parece ferido.",
+                image: "dense_forest_placeholder", // Crie uma imagem de cervo ferido se quiser personalizar
+                choices: [
+                    { text: "Tentar ajudar o cervo.", nextScene: "helpDeer" },
+                    { text: "Continuar seu caminho.", nextScene: "readDiary" }
+                ]
+            },
+            observeFairy: {
+                text: "Você observa a criatura alada de longe. Ela parece brincar com as flores, mas depois desaparece na folhagem. Você perde a chance de interagir com ela.",
+                image: "forest_stream",
+                choices: [
+                    { text: "Continuar seguindo o riacho.", nextScene: "forestPath" },
+                    { text: "Adentrar a densa floresta.", nextScene: "denseForest" }
+                ]
+            },
+            endGame: {
+                text: "Parabéns, Elara! Você restaurou o Jardim Cintilante à sua antiga glória e trouxe a magia de volta a Lumina. Seu ato de coragem e bondade garantiu um futuro brilhante para o reino. O Jardim floresce novamente, um testemunho eterno da sua jornada. Sua aventura inspira a todos!",
+                image: "garden_restored_full",
+                choices: [
+                    { text: "Jogar novamente?", nextScene: "start" }
+                ]
+            },
+             // Cena de um final "neutro" ou de falha, se quiser adicionar
+            gameOver: {
+                text: "Sua jornada chegou a um fim inesperado. O Jardim Cintilante permanece adormecido. Tente novamente para restaurar a magia de Lumina!",
+                image: BLACK_SQUARE, // Imagem de Game Over
+                choices: [
+                    { text: "Recomeçar.", nextScene: "start" }
+                ]
+            }
+        };
+
+        let currentScene = "start";
+
+        function displayScene(sceneName) {
+            const scene = scenes[sceneName];
+            if (!scene) {
+                console.error("Cena não encontrada:", sceneName);
+                displayScene("gameOver"); // Leva para uma tela de erro/game over se a cena não existir
+                return;
+            }
+
+            gameText.textContent = scene.text;
+            gameImage.src = IMAGES[scene.image] || BLACK_SQUARE; // Garante que a imagem seja um placeholder se não definida
+            
+            choicesContainer.innerHTML = '';
+
+            scene.choices.forEach(choice => {
+                const button = document.createElement('button');
+                button.classList.add('choice-button');
+                button.textContent = choice.text;
+                button.dataset.choice = choice.nextScene;
+                button.addEventListener('click', () => makeChoice(choice.nextScene));
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        function makeChoice(nextSceneName) {
+            currentScene = nextSceneName;
+            displayScene(currentScene);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayScene(currentScene);
+        });
+    </script>
+</body>
+</html>
